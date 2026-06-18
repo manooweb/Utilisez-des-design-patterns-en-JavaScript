@@ -11,7 +11,7 @@ class FilterForm {
         this.clearMoviesWrapper()
 
         /* Vous devrez ajouter votre Adapter ici */
-        const FilterLib = new FilterV1(this.Movies, actor)
+        const FilterLib = new FilterMoviesAdapter(this.Movies, actor)
         const FilteredMovies = await FilterLib.filterByActor()
 
         FilteredMovies.forEach(Movie => {
