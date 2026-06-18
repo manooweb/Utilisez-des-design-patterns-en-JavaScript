@@ -2,9 +2,14 @@ class App {
     constructor() {
         this.$moviesWrapper = document.querySelector('.movies-wrapper')
         this.$modalWrapper = document.querySelector('.modal')
-        
+
         this.moviesApi = new MovieApi('/data/new-movie-data.json')
         this.externalMoviesApi = new MovieApi('/data/external-movie-data.json')
+
+        this.wishlistSubject = new WishlistSubject()
+        this.wishlistCounter = new WhishListCounter()
+
+        this.wishlistSubject.subscribe(this.wishlistCounter)
     }
 
     async main() {
@@ -27,7 +32,7 @@ class App {
 
         FullMovies.forEach(movie => {
                 const Template = movieCardWithPlayer(
-                    new MovieCard(movie)
+                    new MovieCard(movie, this.wishlistSubject)
                 )
 
                 this.$moviesWrapper.appendChild(
