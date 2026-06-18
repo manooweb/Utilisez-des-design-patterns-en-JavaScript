@@ -7,6 +7,8 @@ class MoviesFactory {
            // Sinon retourne-moi le nouveau formatage
            case 'newApi':
                return new Movie(data)
+           case 'externalApi':
+               return new ExternalMovie(data)
        }
         // Une bonne pratique est de déclencher une erreur si le format n'est pas reconnu
         throw 'Unknown type format'
