@@ -1,13 +1,17 @@
 class User {
-     constructor(firstName, lastName) {
+     constructor(data) {
         if (User.instance) {
             return User.instance
         }
-        
-        this._firstName = firstName
-        this._lastName = lastName
 
-         User.instance = this
+        if (data && data.firstName && data.lastName) {
+            this._firstName = data.firstName
+            this._lastName = data.lastName
+
+            this.saveToLocalStorage()
+
+            User.instance = this
+        }
      }
 
      get firstName() {
@@ -19,6 +23,26 @@ class User {
      }
 
      get user() {
-         return { firstName: this._firstName, lastName: this._lastName }
+         const firstName = this._firstName || localStorage.getItem('firstName')
+         const lastName = this._lastName || localStorage.getItem('lastName')
+
+         if (firstName && lastName) {
+             return new User({ firstName, lastName })
+         }
+
+         if (!firstName && !lastName) {
+            return null
+         }
+
+         return {
+                firstName: firstName,
+                lastName: lastName
+         }
      }
+
+     saveToLocalStorage() {
+         localStorage.setItem('firstName', this._firstName)
+         localStorage.setItem('lastName', this._lastName)
+     }
+
 }
